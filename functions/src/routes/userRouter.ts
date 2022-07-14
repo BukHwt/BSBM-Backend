@@ -23,6 +23,17 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
+userRouter.get("/:uid", async (req, res) => {
+  try {
+    const uid: string = req.params.uid;
+    const client = await getClient();
+    const result = await client.db().collection<User>("users").findOne({ uid });
+    res.json(result);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
 userRouter.post("/", async (req, res) => {
   try {
     const newUser: User = req.body;
