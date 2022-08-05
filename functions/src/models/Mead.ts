@@ -15,4 +15,5 @@ export default interface Mead {
   baseAmount: number;
   OG: number;
   FG: number;
+  recipe: string;
 }
