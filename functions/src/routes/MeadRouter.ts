@@ -1,4 +1,5 @@
 import express from "express";
+import { ObjectID } from "mongodb";
 import { getClient } from "../db";
 import Mead from "../models/Mead";
 
@@ -17,6 +18,19 @@ meadRouter.get("/", async (req, res) => {
       .collection<Mead>("meads")
       .find()
       .toArray();
+    res.json(results);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
+// Research FindOne and fix function
+
+meadRouter.get("/:_id", async (req, res) => {
+  try {
+    const _id: any = req.params._id;
+    const client = await getClient();
+    const results = await client.db().collection<Mead>("meads").find({ _id });
     res.json(results);
   } catch (err) {
     errorResponse(err, res);
