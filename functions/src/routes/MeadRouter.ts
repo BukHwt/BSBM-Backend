@@ -37,6 +37,20 @@ meadRouter.get("/:id", async (req, res) => {
   }
 });
 
+meadRouter.get("/yourbrews/:authorUID", async (req, res) => {
+  try {
+    const client = await getClient();
+    const results = await client
+      .db()
+      .collection<Mead>("meads")
+      .find({ authorUID: req.params.authorUID })
+      .toArray();
+    res.json(results);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
 meadRouter.post("/", async (req, res) => {
   try {
     const newMead: Mead = req.body;
