@@ -16,4 +16,6 @@ export default interface Mead {
   OG: number;
   FG: number;
   recipe: string;
+  dateAdded: string;
+  lastUpdate: string;
 }
