@@ -62,6 +62,20 @@ meadRouter.post("/", async (req, res) => {
   }
 });
 
+meadRouter.put("/:id", async (req, res) => {
+  try {
+    const updatedMead: Mead = req.body;
+    const client = await getClient();
+    await client
+      .db()
+      .collection<Mead>("meads")
+      .updateOne({ _id: new ObjectId(req.params.id) }, updatedMead);
+    res.status(200).json(updatedMead);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
 meadRouter.delete("/:id", async (req, res) => {
   try {
     const id: string = req.params.id;
